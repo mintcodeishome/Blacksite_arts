@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <!-- Welcome page -->
+		<div  >
+		
+			<div class="jumbotron text-center" style="background-color:#1a0000; color: lawnGreen;">
+				<h1>Welcome to The blacksite !</h1>
+					<p>Where art comes alive</p>
+				<a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">Get Started</a>
+			<div> 
+		
+		</div>
+
+    </div>
+</div>
+{% endblock %}

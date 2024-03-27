@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<style>
+    .section {
+        border: 1px solid grey;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <!-- User Profile Section -->
+    <div class="col-md-4 section">
+        <h2 class="text-center mb-4"><i>Profile</i></h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ user.name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="number">Phone Number</label>
+                <input type="text" class="form-control" id="number" name="number" value="{{ user.number }}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+            </div>
+            <div class="form-group">
+                <label for="identification_number">Identification Number</label>
+                <input type="text" class="form-control" id="identification_number" name="identification_number" value="{{ user.identification_number }}" readonly>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
+        </form>
+    </div>
+
+	<!-- Uploaded Art Section -->
+	<div class="col-md-4 section">
+		<h2 class="text-center mb-4"><i>Upload Art</i></h2>
+		<form action="{{ url_for('upload_art') }}" method="POST" enctype="multipart/form-data">
+			<div class="form-group">
+				<label for="art_name">Art Name</label>
+				<input type="text" class="form-control" id="art_name" name="art_name" required>
+			</div>
+			<div class="form-group">
+				<label for="price">Price</label>
+				<input type="text" class="form-control" id="price" name="price" required>
+			</div>
+			<div class="form-group">
+				<label for="description">Description</label>
+				<textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+			</div>
+			<div class="form-group">
+				<label for="art_image">Art Image</label>
+				<input type="file" class="form-control" id="art_image" name="art_image" required>
+			</div>
+			<br>
+			<button type="submit" class="btn btn-primary btn-block">Upload Art</button>
+		</form>
+	</div>
+
+
+
+    <!-- Owned Art Section -->
+    <div class="col-md-4 section">
+        <h2 class="text-center mb-4"><i>Owned Art</i></h2>
+        <ul>
+            {% for art in user.owned_art %}
+                <li>
+                    {{ art.title }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Art Gallery{% endblock %}
+
+{% block content %}
+
+<style>
+    .art-item {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .art-item img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .art-details {
+        margin-top: 10px;
+    }
+
+    .art-details p {
+        margin: 5px 0;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Art Gallery</h2>
+    <div class="row">
+        {% for art_item in art_items %}
+            <div class="col-md-4 mb-4 art-item">
+                <img src="{{ url_for('uploaded_file', filename=art_item.image_filename) }}" alt="{{ art_item.title }}">
+                <div class="art-details">
+                    <h5>{{ art_item.title }}</h5>
+                    <p>{{ art_item.description }}</p>
+                    <p>Price: Sh.{{ art_item.price }}</p>
+                    {% if current_user.is_authenticated %}
+                        {% if art_item.owner == current_user %}
+                            <p>Owned by You</p>
+                        {% else %}
+                            <a href="{{ url_for('buy_art', art_id=art_item.id) }}" class="btn btn-primary">Buy</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

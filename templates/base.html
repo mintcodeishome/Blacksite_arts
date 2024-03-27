@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Blacksite{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Add your custom CSS here -->
+    <style>
+        body {
+            background-color: #333; /* Dark background color */
+            color: #fff; /* Text color */
+        }
+        .navbar {
+            background-color: #1a0000; /* Dark navbar background color */
+        }
+    </style>
+</head>
+<body>
+   <!-- Navbar -->
+	<nav class="navbar navbar-expand-lg navbar-dark">
+		<a class="navbar-brand" href="/" style="color:#ff0000;">Blacksite</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+				<!-- Add shopping cart icon if user is logged in -->
+				{% if current_user.is_authenticated %}
+					<li class="nav-item">
+						<a class="nav-link" href="/cart">
+							<i class="fas fa-shopping-cart"></i> Cart
+						</a>
+					</li>
+				{% endif %}
+
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user"></i> User
+					</a>
+					<div class="dropdown-menu" aria-labelledby="userDropdown">
+						<a class="dropdown-item" href="/logout">Logout</a>
+						<a class="dropdown-item" href="/profile">Profile</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+
+    <div class="container mt-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <script>
+            // Automatically close the alert after 3 seconds
+            setTimeout(function() {
+                document.querySelector('.alert').remove();
+            }, 3000);
+        </script>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <!-- Bootstrap and jQuery scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="{{ url_for('static', filename='logout.js') }}"></script>
+</body>
+</html>
